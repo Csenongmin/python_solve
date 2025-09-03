@@ -1,22 +1,24 @@
-import sys
+import sys #이분탐색
 input = sys.stdin.readline
-N = int(input().strip())
-arrs = list(map(int,input().split()))
-M = int(input().strip())
-result = 0
-s, e =  1, max(arrs)
-while s <= e:
-    mid = (s+e)//2
-    total=0
-    for arr in arrs:
-        if arr > mid:
-            total += mid
-        else: 
-            total += arr
-    if total <= M:
-        result = mid
-        start = mid + 1
-    else:
-        end = mid-1
+N = int(input())
+budget = list(map(int, input().split()))
+M = int(input())
 
-print(result)
+start, end = 0, max(budget)
+total_budget = 0
+
+if M >= sum(budget):
+	print(max(budget))
+else:
+    while start <= end:
+        mid = (start+end) // 2
+
+        total_budget = 0
+        for i in budget:
+            total_budget += min(mid, i)
+
+        if total_budget > M:
+            end = mid - 1
+        else:
+            start = mid + 1
+    print(end)
